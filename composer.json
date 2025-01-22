@@ -1,0 +1,28 @@
+{
+  "name": "codepros/robocall",
+  "type": "tastyigniter-extension",
+  "description": "Inform via phone call",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Code Pros LLC"
+    }
+  ],
+  "extra": {
+    "tastyigniter-extension": {
+      "code": "codepros.robocall",
+      "name": "RoboCall",
+      "icon": {
+        "class": "fa fa-phone",
+        "backgroundColor": "#006633",
+        "color": "#FFF"
+      }
+    },
+    "require": {
+      "igniter.automation": "*"
+    }
+  },
+  "require": {
+    "aws/aws-sdk-php": "^3.337"
+  }
+}
