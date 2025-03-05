@@ -22,5 +22,6 @@ return [
         'label_secret' => 'AWS API Secret',
         'label_subject' => 'Subject',
         'label_message' => 'Message',
+        'label_country_code' => 'Default country code',
     ],
 ];

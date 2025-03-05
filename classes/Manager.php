@@ -15,16 +15,19 @@ class Manager
 {
     use Singleton;
 
-    public function run($to, $data, $object, $location = null)
+    public function run($to, $data, $object, $location = null): void
     {
         $settings = Settings::instance();
 
         $subject = $this->buildContent($settings->get('subject'), $data);
         $message = $this->buildContent($settings->get('message'), $data);
 
+        if (!str_starts_with($to, '+'))
+            $to = $settings->get('country_code') . $to;
+
         $messageData = [
             'default' => $message,
-            'order_id' => ($object instanceof Orders_model) ? $object->order_id : $object->id,
+            'order_id' => strval(($object instanceof Orders_model) ? $object->order_id : $object->id),
             'customer' => $object->customer_name,
             'restaurant_phone' => $location ? $location->location_telephone : '',
             'restaurant_notification_phone' => $to

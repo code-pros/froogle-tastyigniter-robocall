@@ -66,6 +66,16 @@ return [
                 'path' => '~/app/system/views/mailtemplates/form/variables',
                 'options' => [\System\Models\Mail_templates_model::class, 'getVariableOptions'],
             ],
+            'footer' => [
+                'label' => '<hr>',
+                'type' => 'section',
+            ],
+            'country_code' => [
+                'label' => 'lang:codepros.robocall::default.settings.label_country_code',
+                'type' => 'text',
+                'span' => 'left',
+                'default' => '+1'
+            ],
         ],
         'rules' => [
             ['region', 'lang:codepros.robocall::default.settings.label_region', 'required_if:is_enabled,1|string'],
