@@ -25,11 +25,15 @@ class Manager
         if (!str_starts_with($to, '+'))
             $to = $settings->get('country_code') . $to;
 
+        $phone = $location ? $location->location_telephone : '';
+        if (!str_starts_with($phone, '+'))
+            $phone = $settings->get('country_code') . $phone;
+
         $messageData = [
             'default' => $message,
             'order_id' => strval(($object instanceof Orders_model) ? $object->order_id : $object->id),
             'customer' => $object->customer_name,
-            'restaurant_phone' => $location ? $location->location_telephone : '',
+            'restaurant_phone' => $phone,
             'restaurant_notification_phone' => $to
         ];
 
