@@ -2,16 +2,16 @@
 
 namespace CodePros\RoboCall;
 
-use System\Classes\BaseExtension;
+use Igniter\System\Classes\BaseExtension;
 
 class Extension extends BaseExtension
 {
     public function registerPermissions(): array
     {
         return [
-            'Codepros.RoboCall.Manage' => [
+            'CodePros.RoboCall.Manage' => [
                 'description' => 'Manage RoboCall settings',
-                'group' => 'module',
+                'group' => 'igniter::admin.permissions.name',
             ],
         ];
     }
@@ -24,7 +24,7 @@ class Extension extends BaseExtension
                 'icon' => 'fa fa-phone',
                 'description' => 'lang:codepros.robocall::default.text_settings_description',
                 'model' => \CodePros\RoboCall\Models\Settings::class,
-                'permissions' => ['Codepros.RoboCall.Manage'],
+                'permissions' => ['CodePros.RoboCall.Manage'],
             ],
         ];
     }

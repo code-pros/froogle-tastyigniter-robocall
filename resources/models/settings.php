@@ -63,8 +63,8 @@ return [
             ],
             '_variables' => [
                 'type' => 'partial',
-                'path' => '~/app/system/views/mailtemplates/form/variables',
-                'options' => [\System\Models\Mail_templates_model::class, 'getVariableOptions'],
+                'path' => 'igniter.system::/mailtemplates/variables',
+                'options' => [\Igniter\System\Models\MailTemplate::class, 'getVariableOptions'],
             ],
             'footer' => [
                 'label' => '<hr>',

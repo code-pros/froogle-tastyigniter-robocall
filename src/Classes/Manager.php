@@ -2,19 +2,16 @@
 
 namespace CodePros\RoboCall\Classes;
 
-use Admin\Models\Orders_model;
 use Aws\Credentials\Credentials;
 use Aws\Sns\SnsClient;
 use CodePros\RoboCall\Models\Settings;
+use Igniter\Cart\Models\Order;
 use Igniter\Flame\Support\PagicHelper;
 use Igniter\Flame\Support\StringParser;
-use Igniter\Flame\Traits\Singleton;
-use System\Helpers\ViewHelper;
+use Igniter\System\Helpers\ViewHelper;
 
 class Manager
 {
-    use Singleton;
-
     public function run($to, $data, $object, $location = null): void
     {
         $settings = Settings::instance();
@@ -31,7 +28,7 @@ class Manager
 
         $messageData = [
             'default' => $message,
-            'order_id' => strval(($object instanceof Orders_model) ? $object->order_id : $object->id),
+            'order_id' => strval(($object instanceof Order) ? $object->order_id : $object->id),
             'customer' => $object->customer_name,
             'restaurant_phone' => $phone,
             'restaurant_notification_phone' => $to
@@ -56,7 +53,7 @@ class Manager
     public function buildContent($template, $data = []): string
     {
         $globalVars = ViewHelper::getGlobalVars();
-        if (!empty($globalVars)) {
+        if ($globalVars !== []) {
             $data = (array)$data + $globalVars;
         }
 
@@ -64,6 +61,6 @@ class Manager
 
         $content = (new StringParser)->parse($content, $data);
 
-        return html_entity_decode(preg_replace("/[\r\n]{2,}/", "\n\n", $content), ENT_QUOTES, 'UTF-8');
+        return html_entity_decode((string)preg_replace("/[\r\n]{2,}/", "\n\n", $content), ENT_QUOTES, 'UTF-8');
     }
 }
