@@ -1,6 +1,6 @@
 {
   "name": "codepros/robocall",
-  "type": "tastyigniter-extension",
+  "type": "tastyigniter-package",
   "description": "Inform via phone call",
   "license": "proprietary",
   "authors": [
@@ -8,6 +8,16 @@
       "name": "Code Pros LLC"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "CodePros\\RoboCall\\": "src/"
+    }
+  },
+  "require": {
+    "aws/aws-sdk-php": "^3.69.11",
+    "tastyigniter/core": "^v4.0",
+    "tastyigniter/ti-ext-automation": "^v4.0"
+  },
   "extra": {
     "tastyigniter-extension": {
       "code": "codepros.robocall",
@@ -17,12 +27,6 @@
         "backgroundColor": "#006633",
         "color": "#FFF"
       }
-    },
-    "require": {
-      "igniter.automation": "*"
     }
-  },
-  "require": {
-    "aws/aws-sdk-php": "^3.337"
   }
 }

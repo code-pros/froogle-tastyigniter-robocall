@@ -50,6 +50,9 @@ class Call extends BaseAction
         ];
     }
 
+    /**
+     * @throws ApplicationException
+     */
     public function triggerAction($params): void
     {
         if (!(bool)Settings::get('is_enabled', false))
@@ -61,7 +64,7 @@ class Call extends BaseAction
         if (!$callToNumber = $this->getRecipientAddress($object))
             throw new ApplicationException('RoboCall: Missing a valid call to number from the event payload');
 
-        Manager::instance()->run($callToNumber, $params, $object, $object->location);
+        resolve(Manager::class)->run($callToNumber, $params, $object, $object->location);
     }
 
     protected function shouldTrigger($params): Model|false
@@ -71,20 +74,14 @@ class Call extends BaseAction
         return $object instanceof Model ? $object : false;
     }
 
-    protected function getRecipientAddress($object)
+    protected function getRecipientAddress($object): string|null
     {
-        $mode = $this->model->call_to;
-
-        switch ($mode) {
-            case 'custom':
-                return $this->model->custom;
-            case 'location':
-                return optional($object->location)->location_telephone;
-            case 'customer':
-                return optional($object->customer)->telephone ?? $object->telephone;
-            case 'order':
-            case 'reservation':
-                return $object->telephone;
-        }
+        return match ($this->model->call_to) {
+            'custom' => $this->model->custom,
+            'location' => optional($object->location)->location_telephone,
+            'customer' => optional($object->customer)->telephone ?? $object->telephone,
+            'order', 'reservation' => $object->telephone,
+            default => null,
+        };
     }
 }
