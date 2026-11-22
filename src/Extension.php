@@ -3,9 +3,20 @@
 namespace CodePros\RoboCall;
 
 use Igniter\System\Classes\BaseExtension;
+use Illuminate\Support\Facades\View;
 
 class Extension extends BaseExtension
 {
+    public function boot(): void
+    {
+        // TEMPORARY compatibility shim. TastyIgniter core 4.5 removed the
+        // "igniter.system::/mailtemplates/variables" partial (mail builder), but
+        // this extension and igniterlabs/ti-ext-smsnotify still reference it.
+        // The namespace hint is appended, so a partial shipped by core wins if it
+        // comes back. Remove once smsnotify and core ship an official fix.
+        View::addNamespace('igniter.system', __DIR__.'/../resources/views/system');
+    }
+
     public function registerPermissions(): array
     {
         return [
