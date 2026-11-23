@@ -63,7 +63,7 @@ return [
             ],
             '_variables' => [
                 'type' => 'partial',
-                'path' => 'igniter.system::/mailtemplates/variables',
+                'path' => 'codepros.robocall::_partials.variables',
                 'options' => [\Igniter\System\Models\MailTemplate::class, 'getVariableOptions'],
             ],
             'footer' => [
